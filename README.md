@@ -8,6 +8,7 @@
   select hits, trim(hits) as Hits_Trimmed
   from PortfolioProject..fifa21
 
+__So I used the trim function above to eliminate all the extra spaces to get the rows properly alligned__
 
   --Changing to see if Weight and Height column have approiate data types
   
@@ -22,7 +23,7 @@
   select height, Replace(Replace(height,'''','.'),'"',' ') as HeightConverted
   from PortfolioProject..fifa21
 
- ##With the above query the goal was too turn the weight and height columns into the appropriate data type. Everything worked out fine except the height. I was able to turn the height into decimal values but i couldnt figure out out to change the data type property. Whenever I tried to cast the height column as a float it was always off by 1. So below this line of text are different things I tried but still couldnt get the desired result##
+ __With the above query the goal was too turn the weight and height columns into the appropriate data type. Everything worked out fine except the height. I was able to turn the height into decimal values but i couldnt figure out out to change the data type property. Whenever I tried to cast the height column as a float it was always off by 1. So below this line of text are different things I tried but still couldnt get the desired result__
 
  select height, HeightConverted --(CAST(SUBSTRING(height, 1, CHARINDEX('''',height)-1) As float) +
 				--CAST(SUBSTRING(height, CHARINDEX('''', height) + 1, LEN(height)- CHARINDEX('''', height)-2) as float)
@@ -34,9 +35,6 @@
  UPDATE portfolioproject.dbo.fifa21
  SET HeightConvertedd = CAST(REPLACE(REPLACE(height, '`', '.'), '"','')AS float)
 
-
- Alter Table fifa21
- ADD newheight FLOAT;
 
 
  --Cleaning the value, wage and release clause columns
@@ -129,6 +127,8 @@
 	select [Release Clause],Replace(Replace(REPLACE(REPLACE(Transformed_Release_Clause, 'â‚¬',''), 'k', ''), 'm', ''), '.','') CleanedReleaseCause
  from PortfolioProject..fifa21
 
+ __This above function I really enjoyed doing. I had to create a case statement while also using the replace function to get rid of different characters that looked like in the different rows that didnt belong. Also I used this case statement to get the values to show the proper values of thousands and millions. Examples of the data 'â‚¬95K' and 'â‚¬1.2M'.__
+
 
 
 	--Seperating Joined Column into year, month, and day
@@ -143,7 +143,7 @@
 	from PortfolioProject..fifa21
 
 
-
+__There was a column that had data the looked like '2018-07-01 00:00:00.000'. I wanted to seperate that column into multiple for the year,month, and day. I used the the above statement to accomplish that.__
 
 	--Seperating team & contract into seperate columns
 	
@@ -193,6 +193,7 @@
 	select yearrange
 	from PortfolioProject..fifa21
 
+__This by far was the hardest task. I was trying to seperate the [Team & Contract] into two seperate columns. I was able to seperate the year range using RIGHT, CHARINDEX, and REVERSE to extract that data from that column into a new one. The team part is the hardest part of it all. I get an error message that states 'Invalid length parameter passed to the LEFT or SUBSTRING function.' It shows the actual team name on there own and then pops of the previously stated message. I have tried adjusting the the lenght parameter it doesnt give me the proper result__
 
 
 	--Showing off random skills 
@@ -203,7 +204,7 @@
 	Join PortfolioProject.dbo.fifa21 b
 	on a.id=b.id
 
-
+__Just a simple join on the same table to compare columns__
 
 --Delete Unused Columns
 
@@ -212,3 +213,5 @@ from PortfolioProject..fifa21
 
 Alter Table PortfolioProject.dbo.fifa21
 Drop Column [Gk Handling], [Gk Kicking], [Gk Reflexes]
+
+__Just deleting random tables(which I believe I read is not best practice to delete data but just for and example)
