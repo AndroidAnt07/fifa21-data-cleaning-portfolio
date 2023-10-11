@@ -22,6 +22,7 @@
   select height, Replace(Replace(height,'''','.'),'"',' ') as HeightConverted
   from PortfolioProject..fifa21
 
+ ##With the above query the goal was too turn the weight and height columns into the appropriate data type. Everything worked out fine except the height. I was able to turn the height into decimal values but i couldnt figure out out to change the data type property. Whenever I tried to cast the height column as a float it was always off by 1. So below this line of text are different things I tried but still couldnt get the desired result##
 
  select height, HeightConverted --(CAST(SUBSTRING(height, 1, CHARINDEX('''',height)-1) As float) +
 				--CAST(SUBSTRING(height, CHARINDEX('''', height) + 1, LEN(height)- CHARINDEX('''', height)-2) as float)
