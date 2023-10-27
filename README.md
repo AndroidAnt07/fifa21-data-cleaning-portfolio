@@ -2,6 +2,8 @@
 
 
   --Getting rid of new line characters in Hits column
+
+  
   select *
   from PortfolioProject..fifa21
 
@@ -9,6 +11,8 @@
   from PortfolioProject..fifa21
 
 __So I used the trim function above to eliminate all the extra spaces to get the rows properly alligned__
+
+
 
   --Changing to see if Weight and Height column have approiate data types
   
@@ -23,7 +27,11 @@ __So I used the trim function above to eliminate all the extra spaces to get the
   select height, Replace(Replace(height,'''','.'),'"',' ') as HeightConverted
   from PortfolioProject..fifa21
 
+  
+
  __With the above query the goal was too turn the weight and height columns into the appropriate data type. Everything worked out fine except the height. I was able to turn the height into decimal values but i couldnt figure out out to change the data type property. Whenever I tried to cast the height column as a float it was always off by 1. So below this line of text are different things I tried but still couldnt get the desired result__
+
+ 
 
  select height, HeightConverted --(CAST(SUBSTRING(height, 1, CHARINDEX('''',height)-1) As float) +
 				--CAST(SUBSTRING(height, CHARINDEX('''', height) + 1, LEN(height)- CHARINDEX('''', height)-2) as float)
@@ -126,6 +134,8 @@ __So I used the trim function above to eliminate all the extra spaces to get the
 
 	select [Release Clause],Replace(Replace(REPLACE(REPLACE(Transformed_Release_Clause, 'â‚¬',''), 'k', ''), 'm', ''), '.','') CleanedReleaseCause
  from PortfolioProject..fifa21
+
+ 
 
  __This above function I really enjoyed doing. I had to create a case statement while also using the replace function to get rid of different characters that looked like in the different rows that didnt belong. Also I used this case statement to get the values to show the proper values of thousands and millions. Examples of the data 'â‚¬95K' and 'â‚¬1.2M'.__
 
